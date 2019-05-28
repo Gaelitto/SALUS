@@ -1,0 +1,25 @@
+{% extends "./base.html" %}
+
+{% block corpo %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<style type="text/css">
+	input{
+		width: 100%;
+	}
+</style>
+<div class="container">
+	
+	<form method="POST">
+		{% csrf_token %}
+		{{formvisita.as_p}}
+		<center><button type="submit" class="btn btn-success mb-2" href="{% url 'cadastro_visita' %}">Enviar</button></center>
+	</form>
+	<center><button type="submit" href="{% url 'justificar_visita' %}" class="btn btn-danger">Justificar visita não finalizada</button> </center>
+</div>
+{% endblock %}

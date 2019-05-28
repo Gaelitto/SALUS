@@ -1,0 +1,97 @@
+{% extends "./base.html" %}
+
+{% block corpo %}
+<style type="text/css">
+	input{
+		width: 100%;
+	}
+
+	#ajuda1 { 
+		padding-left: 30px;
+		padding-right: 30px
+	}
+
+	#ajuda { 
+		margin-left: 25px;
+		padding-left: 30px;
+		padding-right: 30px
+	}
+	h1 {
+		padding-left: 50px;
+	}
+	#editar {
+		margin-left: 25px;
+		padding-left: 60px;
+		padding-right: 60px
+	}
+</style>
+       
+<div style="margin-bottom: 2%;"class="container mt-5">
+	<form method="POST">
+<center><h2> Cadastro de Usuários </h2></center>
+		<br>
+
+		{% csrf_token %}
+		{{formUser.as_p}}
+		{{formTrajeto.as_p}}
+		<br>
+		
+		<div class="row">
+			<div class="col-md-1 col-sm-2" style="margin-right: 30px;">
+				<button id= 'ajuda1' class="btn btn-success" type="submit">
+					<span style="font-size: 1.2rem; color: black">
+                		<i class="far fa-save"></i>
+               		</span>  
+					Enviar
+				</button>
+			</div>
+			<div class="col-md-1 col-sm-2">
+				<button  class="btn btn-warning" id= "ajuda" data-toggle="modal" data-target="#exampleModal">
+					<span style="font-size: 1.2rem; color: black">
+						<i class="far fa-question-circle"></i>
+					</span> 
+					Ajuda
+				</button>
+			</div>
+		</div>
+		
+		
+		
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">DICA DE PREENCHIMENTO DO CADASTRO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        		Você deve preencher todos os campos de forma correta, de maneira a atentar-se nos campos de CPF e e-mail, que não podem ter nenhum usuário já cadastrado contendo informações coincidentes com estas, e ao campo de rota, que ilustra o trajeto que será adotado pelo ACE para desenvolver seu trabalho.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+	</form>
+</div>
+
+
+{% if formUser.errors %}
+    {% for field in formUser %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in formUser.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "./base.html" %}
+
+{% block corpo %}
+<div class="container-fluid">
+  <center>
+      <h2 style="margin-bottom: 20px; margin-top: 20px;"> 
+        <span style=" color: black">
+          <i class="fas fa-route"></i>      
+        </span> 
+        Listagem de rotas 
+     </h2>
+  </center>
+<div class="row">
+  <table class=" table table-striped col-md-12">
+    <tr>
+      <th>Nome da rota</th>
+      <th>Nome do Bairro</th>
+      <th>Nome das Ruas</th>
+    </tr>
+    {% for i in horario %}
+      <tr>
+        <td>
+           {{i.rota.nome}}
+        </td>
+        <td>
+          {{i.rota.bairro}}
+        </td>
+        <td>
+      {% for r in i.rota.ruas.all %}
+            {{r}},
+      {% endfor %}
+        </td>
+
+      </tr>
+        
+    {% endfor %}
+  
+  </table>
+
+</div>
+	
+</table>
+</div>
+{% endblock %}

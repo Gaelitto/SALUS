@@ -1,0 +1,124 @@
+{% extends "./base.html" %}
+
+{% block corpo %}
+<br>
+<center><h2> Cadastro de residências </h2></center>
+<style type="text/css">
+	input{
+		width: 100%;
+	}
+
+</style>
+<div class="container mt-5" style="margin-bottom: 2%;">
+<h1 class="text-center mt-3"></h1>	
+		<form method="POST">
+		{% csrf_token %}
+		{{formresidencia.as_p}}
+		<div class="row">
+			<div class="col-md-1 col-sm-2" style="margin-right: 30px;">
+				<button id= 'ajuda1' class="btn btn-success" type="submit">
+					<span style="font-size: 1.2rem; color: black">
+                		<i class="far fa-save"></i>
+               		</span>  
+					Enviar
+				</button>
+			</div>
+			<div class="col-md-1 col-sm-2">
+				<button  class="btn btn-warning" id= "ajuda" data-toggle="modal" data-target="#exampleModal">
+					<span style="font-size: 1.2rem; color: black">
+                		<i class="far fa-question-circle"></i>
+               		</span>  
+					Ajuda
+				</button>
+			</div>
+		</div>
+
+	</form>
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">DICA DE PREENCHIMENTO DO CADASTRO</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+	      </div>
+	      <div class="modal-body">
+	        		Você deve preencher todos os campos de forma correta, colocando o endereço da localidade em questão, seu número e o nome de seu responsável.
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+{% endblock %}
+
+{% block js %}
+
+
+		$(document).ready(function() {
+
+			function update_bairro() {
+				$('#id_rua').attr('disabled','disabled');
+				$('#id_rua').empty();
+				bairro = $('#id_bairro').val();
+				var url = "{% url 'ajax_ruas' '0' %}".replace('0', bairro);
+				$.getJSON(url, function( data ) {
+					var items = [];
+					$.each( data, function( key, val ) {
+						items.push( "<option value='" + val.pk + "'>" + val.nome + "</option>" );
+					});
+
+					$('#id_rua').append(items.join(''));
+					$("#id_rua").removeAttr('disabled');
+				});
+			}
+
+			function update_cidade() {
+				$('#id_bairro').attr('disabled','disabled');
+				$('#id_bairro').empty();
+				cidade = $('#id_cidade').val();
+				var url = "{% url 'ajax_bairros' '0' %}".replace('0', cidade);
+				$.getJSON(url, function( data ) {
+					var items = [];
+					$.each( data, function( key, val ) {
+						items.push( "<option value='" + val.pk + "'>" + val.nome + "</option>" );
+					});
+
+					$('#id_bairro').append(items.join(''));
+					$("#id_bairro").removeAttr('disabled');
+					update_bairro();
+				});
+			}
+
+			function update_estado() {
+				$('#id_cidade').attr('disabled','disabled');
+				$('#id_cidade').empty();
+
+				estado = $('#id_estado').val();
+
+				var url = "{% url 'ajax_cidades' '0' %}".replace('0', estado);
+
+				$.getJSON(url, function( data ) {
+				  var items = [];
+
+				  $.each( data, function( key, val ) {
+				    items.push( "<option value='" + val.pk + "'>" + val.nome + "</option>" );
+				  });
+
+					$('#id_cidade').append(items.join(''));
+					$("#id_cidade").removeAttr('disabled');
+					update_cidade();
+				});
+			}
+
+			$('#id_estado').change(update_estado);
+			$('#id_cidade').change(update_cidade);
+			$('#id_bairro').change(update_bairro);
+			update_estado();
+			update_cidade();
+			update_bairro();
+		});
+{% endblock %}

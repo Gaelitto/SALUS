@@ -1,0 +1,47 @@
+{% extends "./base.html" %}
+
+{% block corpo %}
+
+<div class="container-fluid">
+	<div class="row">
+
+		<table class="table table-striped col-md-12">
+    		<thead>
+    			<tr>
+    			  <th scope="col">Data</th>
+    			  <th scope="col">Número</th>
+    			  <th scope="col">Responsável</th>	
+			      <th scope="col">Cidade</th>
+			      <th scope="col">Bairro</th>
+			      <th scope="col">Rua</th>
+      			</tr>
+  			</thead>
+  			{% for i in info %}
+  			<tbody>
+  				<td>
+			    {{i.data}}
+			    </td>
+			    <td>
+			    {{i.residencia_da_visita.numero_casa}}
+			    </td>
+			    <td>
+			    {{i.residencia_da_visita.responsavel}}
+			    </td>
+			    <td>
+			    {{i.residencia_da_visita.cidade}}
+			    </td>
+			    <td>
+			    {{i.residencia_da_visita.bairro}}
+			    </td>
+			    <td>
+			    {{i.residencia_da_visita.rua}}
+			    </td>
+  			</tbody>
+  			{% endfor %}
+		</table>
+
+	</div>
+</div>
+
+
+{% endblock %}

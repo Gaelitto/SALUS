@@ -1,0 +1,81 @@
+{% extends "./base.html" %}
+
+{% block corpo %}
+<div class="container-fluid">
+  <center>
+    <h2 style="margin-bottom: 20px; margin-top: 20px"> 
+      <span style=" color: black">
+          <i class="fas fa-users"></i>
+      </span> 
+      Listagem de Agentes
+    </h2>
+  </center>
+
+<div class="row">
+
+<table class="table table-striped col-md-12">
+    <thead>
+    <tr>
+      <th scope="col">
+        NOME
+      </th>
+      <th scope="col">
+          CPF
+      </th>
+      <th scope="col">
+        E-MAIL
+      </th>
+      
+      </tr>
+  </thead>
+  {% for i in user %}
+  <tbody>
+    <td>
+    {{i.first_name}}
+    </td>
+    <td>
+    {{i.username}}
+    </td>
+    <td>
+    {{i.email}}
+    </td>
+    <td>
+      <a type= "submit" href="{% url 'apagar' i.id%}">
+        <button class="btn btn-danger">
+            <span style="font-size: 1.1rem; color: black">
+                <i class="fas fa-trash"></i>
+            </span>  
+          Apagar
+        </button>
+      </a>
+    </td>
+    <td>
+    <a type= "submit" href="{% url 'editar' i.username %}">
+      <button class="btn btn-primary">
+          <span style="font-size: 1.1rem; color: black">
+                <i class="fas fa-user-edit"></i>
+          </span>  
+        Editar
+      </button>
+    </a>
+    </td>
+    <td>
+      <a type= "submit" href="{% url 'inspecionar_trabalho' i.id %}" >
+          <button class="btn btn-info">
+              <span style="font-size: 1.1rem; color: black">
+                <i class="far fa-eye"></i>
+              </span>  
+              Inspecionar
+          </button>
+      </a>
+    </td>
+
+  </tbody>
+  {% endfor %}
+</table>
+
+</div>
+</div>
+
+
+{% endblock %}

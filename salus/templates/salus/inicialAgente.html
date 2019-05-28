@@ -1,0 +1,172 @@
+{% extends "./base.html" %}
+
+{% block corpo %}
+	
+	<br>
+	<br>
+	<h2 class="mb-5 text-center">Olá, Agente de Endemias. O que deseja hoje?</h2>
+	<center>
+		<div class="container">
+			<div class="row mt-5">
+				<div class="col-md-3">
+					{% if messages %}
+						{% for message in messages %}
+							<div class="alert {{messages.tag}}">
+								<span class="closebtn">&times;</span>  
+								<center>{{ message }}</center>
+							</div>
+						{% endfor %}
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</center>
+	<br>
+	<div class="container">
+		<div class="row mt-5">
+			<div class="col-md-4">
+				<a href="#">
+				<div class="card text-white  mb-3" style="max-width: 18rem; background-color: #17A2B8; min-height: 235px;">
+				  <a style=" color:#ffffff; text-align:center ;text-decoration: none; " href="" data-toggle="modal" data-target="#exampleModal">
+				  	<div class="card-header">
+				  		<span style="font-size: 1.2rem; color: black">
+							  <i class="fas fa-file-signature"></i>
+						</span>  
+				  		COMEÇAR ROTA
+				  	</div></a>
+				  <div class="card-body">
+
+				    <p style=" text-align: justify;" class="card-text">Interface de prenchimento do código da etiqueta identificadora das residências. Aqui você irá registrar os dados da sua visita</p>
+				  </div>
+				</div>
+				
+			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				 <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">Adicionar código da etiqueta da casa</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        
+				      </div>
+				      <style type="text/css">
+							input{
+								width: 100%;
+							}
+					  </style>
+						<div class="container">
+							
+							<form method="POST" name="visita">
+								{% csrf_token %}
+								{{formvisita.as_p}}
+								<input style="margin-bottom: 10px" type="text" name="codigo_visita" id="codigo_visita" size="TAMANHO_DO_FORMULARIO">
+
+								<center>
+									
+
+									<button type="submit" class="btn btn-success mb-2">
+										<span style="font-size: 1.2rem; color: black">
+				                			<i class="far fa-save"></i>
+				               			</span>  
+										Enviar
+									</button>
+								</center>
+							</form>
+							<center>
+
+								
+								</center>
+						</div>
+						      <div class="modal-footer">
+						      	
+						      		<a type="submit" href="{% url 'justificar_visita' %}" >
+						      			<button class="btn btn-warning">
+											<span style=" color: black"><i class="fas fa-exclamation-triangle"></i></span> 
+											impossibilidade na visita
+										</button>
+									</a> 
+						        <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+						      </div>
+					</div>
+				</div>
+			</div>
+			</a>
+			</div>
+
+			<div class="col-md-4">
+				<a href="#">
+				<div class="card text-white  mb-3" style="max-width: 18rem; background-color: #17A2B8">
+				  <a style="color:#ffffff; text-align:center ; text-decoration:none" href="" data-toggle="modal" data-target="#Modal_cidades">
+				  <div class="card-header">
+					  	<span style="font-size: 1.2rem; color: black">
+								  <i class="fas fa-chart-bar"></i>
+						</span>  
+					  	DADOS ESTATISTICOS
+				  </div></a>
+				  <div class="card-body">
+				    <p style=" text-align: justify;" class="card-text">Interface de exibição das localidades municipais que apresentam ocorrências de focos do mosquito Aedes aegypti. Você deve dar maior atenção a esses locais</p>
+				  </div>
+				</div>
+				<div class="modal fade" id="Modal_cidades" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+				    	<div class="modal-content">
+				      		<div class="modal-header">
+				        		<h5 class="modal-title" id="exampleModalLabel" >Qual é a cidade que você deseja visualizar os dados?</h5>
+				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          			<span aria-hidden="true">&times;</span>
+				        		</button>
+				      		</div>
+				      		<div class="modal-body">
+				        
+				      		</div>
+				      		<style type="text/css">
+								input{
+										width: 100%;
+									}
+							</style>
+						<div class="container">
+					<!--AJUSTAR AS INFORMAÇÕES, JÁ QUE ESSAS SÃO IGUAIS ÀS DO OUTRO MODAL -->
+							<form method="POST" name="grafico">
+								<center>
+								{% csrf_token %}
+								{{graph.as_p}}
+								</center>
+								
+							
+					
+						</div>
+					      <div class="modal-footer">
+					      	<button type="submit" class="btn btn-success mb-2">
+										Enviar
+							</button>
+							</form>
+					        <button type="button" class="btn btn-danger mb-2" data-dismiss="modal">Fechar</button>
+					      </div>
+				    </div>
+				  </div>
+				</div>
+			</a>
+			</div>
+			<div class="col-md-4">
+				<a href="#">
+			<div class="card text-white  mb-3" style="max-width: 18rem; background-color: #17A2B8">
+				  <a style="color:#ffffff; text-align: center; text-decoration:none" href="{% url 'listar_rota' %}">
+				  	<div class="card-header">
+				  		<span style="font-size: 1.2rem; color: black">
+							  <i class="fas fa-map-signs"></i>
+						</span>  
+				  		ROTA DE TRABALHO
+				  	</div></a>
+				  <div class="card-body">
+				    <p  style=" text-align: justify;" class="card-text">Você tem um percurso definido que deve adotar durante a execução do seu trabalho, esse percuso mostra os endereços que devem ser visitados. Aqui você tem acesso a eles</p>
+				  </div>
+				</div>
+			</a>
+			</div>
+		</div>
+	</div>
+	
+{% endblock %}

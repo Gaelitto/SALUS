@@ -1,0 +1,110 @@
+<{% extends "./base.html" %}
+
+{% block corpo %}
+<br>
+<center><h2> Justificar impossibilidade da visita </h2></center>
+<style type="text/css">
+	input{
+		width: 100%;
+	}
+</style>
+<div class="container">
+	
+	<form method="POST">
+		{% csrf_token %}
+		{{formjustificar_visita.as_p}}
+		<button type="submit">Enviar</button>
+	</form>
+</div>
+
+
+{% endblock %}
+
+{% block js %}
+
+
+		$(document).ready(function() {
+
+			function update_rua() {
+				$('#id_casas').attr('disabled','disabled');
+				$('#id_casas').empty();
+				rua = $('#id_rua').val();
+				var url = "{% url 'ajax_casas' '0' %}".replace('0', rua);
+				$.getJSON(url, function( data ) {
+					var items = [];
+					$.each( data, function( key, val ) {
+						items.push( "<option value='" + val.pk + "'>" + val.numero_casa + "</option>" );
+					});
+
+					$('#id_casas').append(items.join(''));
+					$("#id_casas").removeAttr('disabled');
+				});
+			}
+
+			function update_bairro() {
+				$('#id_rua').attr('disabled','disabled');
+				$('#id_rua').empty();
+				bairro = $('#id_bairro').val();
+				var url = "{% url 'ajax_ruas' '0' %}".replace('0', bairro);
+				$.getJSON(url, function( data ) {
+					var items = [];
+					$.each( data, function( key, val ) {
+						items.push( "<option value='" + val.pk + "'>" + val.nome + "</option>" );
+					});
+
+					$('#id_rua').append(items.join(''));
+					$("#id_rua").removeAttr('disabled');
+					update_rua();
+				});
+			}
+
+			function update_cidade() {
+				$('#id_bairro').attr('disabled','disabled');
+				$('#id_bairro').empty();
+				cidade = $('#id_cidade').val();
+				var url = "{% url 'ajax_bairros' '0' %}".replace('0', cidade);
+				$.getJSON(url, function( data ) {
+					var items = [];
+					$.each( data, function( key, val ) {
+						items.push( "<option value='" + val.pk + "'>" + val.nome + "</option>" );
+					});
+
+					$('#id_bairro').append(items.join(''));
+					$("#id_bairro").removeAttr('disabled');
+					update_bairro();
+				});
+			}
+
+			function update_estado() {
+				$('#id_cidade').attr('disabled','disabled');
+				$('#id_cidade').empty();
+
+				estado = $('#id_estado').val();
+
+				var url = "{% url 'ajax_cidades' '0' %}".replace('0', estado);
+
+				$.getJSON(url, function( data ) {
+				  var items = [];
+
+				  $.each( data, function( key, val ) {
+				    items.push( "<option value='" + val.pk + "'>" + val.nome + "</option>" );
+				  });
+
+					$('#id_cidade').append(items.join(''));
+					$("#id_cidade").removeAttr('disabled');
+					update_cidade();
+				});
+			}
+
+			
+
+			$('#id_estado').change(update_estado);
+			$('#id_cidade').change(update_cidade);
+			$('#id_bairro').change(update_bairro);
+			$('#id_rua').change(update_rua);
+			update_estado();
+			update_cidade();
+			update_bairro();
+			update_rua();
+		});
+{% endblock %}

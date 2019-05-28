@@ -1,0 +1,24 @@
+<{% extends "./base.html" %}
+
+{% block corpo %}
+<style type="text/css">
+	input{
+		width: 100%;
+	}
+</style>
+<div class="container">
+	
+	<form method="POST">
+		{% csrf_token %}
+		<h5>Cidade:</h5>{{visitation.cidade}}
+		<h5>Bairro:</h5>{{visitation.bairro}}
+		<h5>Rua:</h5>{{visitation.rua}}
+		<h5>Número:</h5>{{visitation.numero_casa}}
+		<h5>Responsável:</h5>{{visitation.responsavel}}
+		{{formprancheta.as_p}}
+		<button type="submit">Enviar</button>
+	</form>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends "./base.html" %}
+
+{% block corpo %}
+	
+	<br>
+	<br>
+	<h2 class="mb-5 text-center">Olá, Supervisor. O que deseja hoje?</h2>
+	<br>
+	
+	<div class="container">
+		<div class="row mt-5">
+			<div class="col-md-3">
+				<a href="#">
+				<div class="card text-white  mb-3" style="max-width: 18rem; background-color: #17A2B8">
+				  <a style="color:#ffffff ;  text-align:center ; text-decoration: none" href="{% url 'usuarios' %}">
+				  	<div class="card-header">
+				  		<span style="font-size: 1.2rem; color: black">
+							  <i id="opcao-addag" class="fas fa-user-plus"></i>
+						</span>  
+				  		ADICIONAR AGENTE
+				  	</div></a>
+				  <div class="card-body">
+				    <p class="card-text" style=" text-align: justify;">Interface responsável pelo cadastro dos agentes de endemias do município em questão, para isso, deve-se preencher alguns dados pessoais deste agente. </p>
+				  </div>
+				</div>
+			</a>
+			</div>
+			<div class="col-md-3">
+				<a href="#">
+				<div class="card text-white  mb-3" style="max-width: 18rem; background-color: #17A2B8">
+				  <a  href="{% url 'listar_usuarios' %}" style="color:#ffffff ;  text-align:center ; text-decoration: none" href="{% url 'usuarios' %}">
+				  	<div class="card-header">
+				  		<span style="font-size: 1.2rem; color: black">
+							  <i id="opcao-lisagn" class="far fa-address-card"></i>
+						</span>  
+				  		LISTAR USUÁRIOS
+				  	</div></a>
+				  <div class="card-body">
+				    <p class="card-text" style=" text-align: justify;"> Esta é a interface onde é possível fazer manipulações com os agentes cadastrados no sistema. Aqui você pode editar, apagar e inspecionar os dados dos Agentes. </p>
+				  </div>
+				</div>
+			</a>
+			</div>
+			<div class="col-md-3">
+				<div class="card text-white  mb-3" style="max-width: 18rem; background-color: #17A2B8; min-height: 235px;">
+				  <a style="color:#ffffff;  text-align:center ; text-decoration: none"  href="#" data-toggle="modal" data-target="#Modal_cidades">
+				  	<div class="card-header"> 
+				  		<span style="font-size: 1.2rem; color: black">
+							  <i id="opcao-showdata" class="fas fa-chart-bar"></i>
+						</span>  
+				  		DADOS ESTATISTICOS 
+				  	</div></a>
+				  <div class="card-body">
+				    <p class="card-text" style=" text-align: justify;">Interface de exibição das localidades municipais que apresentam ocorrências de focos do mosquito Aedes aegypti.</p>
+				  </div>
+				</div>
+				<div class="modal fade" id="Modal_cidades" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+				    	<div class="modal-content">
+				      		<div class="modal-header">
+				        		<h5 class="modal-title" id="exampleModalLabel">Qual é a cidade que você deseja visualizar os dados?</h5>
+				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          			<span aria-hidden="true">&times;</span>
+				        		</button>
+				      		</div>
+				      		<div class="modal-body">
+				        
+				      		</div>
+				      		<style type="text/css">
+								input{
+										width: 100%;
+									}
+							</style>
+						<div class="container">
+					<!--AJUSTAR AS INFORMAÇÕES, JÁ QUE ESSAS SÃO IGUAIS ÀS DO OUTRO MODAL -->
+							<form method="POST" >
+								{% csrf_token %}
+								{{graph.as_p}}
+							
+						</div>
+					      <div class="modal-footer">
+					  		 <button type="submit" class="btn btn-success">Enviar</button></form>
+					        <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+					      </div>
+				    </div>
+				  </div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<a href="#">
+			<div class="card text-white  mb-3" style="max-width: 18rem; background-color: #17A2B8; min-height: 235px;">
+				  <a style="color:#ffffff; text-align:center ;text-decoration: none"  href="{% url 'cadastro_residencia' %}">
+				  	<div class="card-header">
+				  		<span style="font-size: 1.2rem; color: black">
+							  <i id="opcao-addacas" class="fas fa-home"></i>
+						</span>  
+				  		NOVA RESIDENCIA
+				  	</div></a>
+				  <div class="card-body">
+				    <p class="card-text" style=" text-align: justify;"> Interface de cadastro das residências, e suas informações primordiais, no sistema.</p>
+				  </div>
+				</div>
+			</div>
+			<a href="#">
+		</div>
+	</div>
+
+	
+{% endblock %}
+
+	
